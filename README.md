@@ -26,7 +26,7 @@ sudo apt install bind9 bind9utils bind9-doc python3
 2. IPv4強制オプションの設定（IPv6エラー対策）
 network unreachable エラーを防ぐため、IPv4通信を強制します。
 sudo nano /etc/default/named
-(OPTIONS="-u bind -4" と追記して保存)
+(OPTIONS="-u bind -4" と追記して保存）
 
 3. BIND9とPythonスクリプトの配置
 - /etc/bind/db.rpz のベースを作成。
