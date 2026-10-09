@@ -1,0 +1,13 @@
+$TTL 60
+@   IN  SOA localhost. root.localhost. (
+            2026091501 ; Serial
+            3600       ; Refresh
+            1800       ; Retry
+            604800     ; Expire
+            86400 )    ; Minimum TTL
+    IN  NS  localhost.
+
+; === 広告・悪質ドメインのブロックリスト（以下は例） ===
+doubleclick.net      IN CNAME .
+ads.google.com       IN CNAME .
+malicious-site.com   IN CNAME .

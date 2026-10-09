@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ANUBIS NEWS — テクノロジー、地域、暮らしを読み解くニュースポータル">
+  <title>ANUBIS NEWS</title>
+  <style>
+    :root { --ink:#17212b; --blue:#0664b9; --line:#dde3e9; --muted:#617080; --paper:#fff; --wash:#f3f6f8; --accent:#e63e32; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--wash); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif; line-height:1.55; }
+    button,input { font:inherit; }
+    .topline { height:5px; background:linear-gradient(90deg,#e54233 0 25%,#f7b733 25% 50%,#28a46b 50% 75%,#0876cb 75%); }
+    header { background:#fff; border-bottom:1px solid var(--line); }
+    .wrap { width:min(1140px,calc(100% - 32px)); margin:auto; }
+    .masthead { min-height:72px; display:flex; gap:24px; align-items:center; }
+    .brand { color:#111; font-size:28px; letter-spacing:.075em; font-weight:900; white-space:nowrap; text-decoration:none; }
+    .brand b { color:var(--accent); }
+    .tagline { color:var(--muted); font-size:12px; border-left:1px solid var(--line); padding-left:20px; }
+    .search { display:flex; margin-left:auto; width:min(365px,40vw); }
+    .search input { min-width:0; flex:1; border:1px solid #bbc7d2; border-radius:5px 0 0 5px; padding:9px 11px; outline-color:var(--blue); }
+    .search button { border:0; padding:0 14px; color:#fff; background:var(--blue); border-radius:0 5px 5px 0; cursor:pointer; font-weight:700; }
+    nav { background:#fff; border-top:1px solid #edf0f2; overflow:auto; }
+    .navlist { display:flex; min-width:max-content; margin:0; padding:0; list-style:none; }
+    .navlist a { display:block; padding:11px 16px 10px; color:#263847; text-decoration:none; font-size:14px; font-weight:700; border-bottom:3px solid transparent; }
+    .navlist a:hover,.navlist a:first-child { color:var(--blue); border-color:var(--blue); }
+    .notice { margin:16px auto 0; padding:8px 12px; font-size:13px; border-radius:5px; background:#eaf5ff; color:#165584; }
+    .notice strong { margin-right:8px; }
+    .status-dot { display:inline-block; width:8px; height:8px; margin-right:6px; border-radius:50%; background:#798692; }
+    .status-dot.on { background:#d7372d; box-shadow:0 0 0 3px #f8d9d6; }
+    .status-dot.off { background:#2b9d61; box-shadow:0 0 0 3px #d9f1e4; }
+    main { padding:18px 0 42px; }
+    .layout { display:grid; grid-template-columns:minmax(0,1fr) 310px; gap:20px; }
+    .card { background:var(--paper); border:1px solid var(--line); border-radius:7px; }
+    .section-head { display:flex; align-items:center; justify-content:space-between; padding:13px 16px; border-bottom:1px solid var(--line); }
+    .section-head h2 { margin:0; font-size:17px; }
+    .section-head a { color:var(--blue); text-decoration:none; font-size:13px; }
+    .lead { padding:16px; display:grid; grid-template-columns:1.25fr 1fr; gap:17px; }
+    .lead-image { min-height:220px; border-radius:5px; overflow:hidden; position:relative; background:linear-gradient(135deg,#0c5687,#43a6c2 52%,#f8c875); }
+    .lead-image:before { content:""; position:absolute; width:135%; height:55%; left:-12%; bottom:-25%; background:rgba(255,255,255,.82); border-radius:50% 50% 0 0; transform:rotate(-8deg); }
+    .lead-image:after { content:"ANUBIS\A REPORT"; white-space:pre; position:absolute; left:19px; top:18px; color:#fff; font-size:21px; font-weight:900; letter-spacing:.12em; line-height:1.25; text-shadow:0 1px 3px #174a64; }
+    .eyebrow { color:var(--blue); font-size:12px; font-weight:800; }
+    h1 { margin:7px 0 9px; font-size:23px; line-height:1.45; letter-spacing:.02em; }
+    .lead p { margin:0; color:#526170; font-size:14px; }
+    .meta { color:#758390; font-size:12px; margin-top:12px!important; }
+    .ad-slot { margin-top:18px; overflow:hidden; }
+    .ad-label { padding:4px 10px; color:#7b8792; background:#fff; border-bottom:1px solid var(--line); text-align:right; font-size:10px; letter-spacing:.08em; }
+    .ad-frame { display:block; border:0; width:100%; background:#f7f8f9; }
+    .leaderboard .ad-frame { height:112px; }
+    .rail-ad .ad-frame { height:270px; }
+    .mobile-ad { display:none; }
+    .feed { margin-top:18px; }
+    .article { display:grid; grid-template-columns:116px 1fr; gap:14px; padding:15px 16px; border-bottom:1px solid var(--line); }
+    .article:last-child { border:0; }
+    .thumb { border-radius:4px; min-height:77px; background:linear-gradient(145deg,#d8e3ec,#8eaac0); }
+    .thumb.t2 { background:linear-gradient(145deg,#f6c56b,#db6c48); }.thumb.t3 { background:linear-gradient(145deg,#b6dfc6,#3f9779); }.thumb.t4 { background:linear-gradient(145deg,#d4c1ed,#7769aa); }
+    .article h3 { margin:2px 0 5px; font-size:16px; line-height:1.4; }.article p { margin:0; color:#5c6c7a; font-size:13px; }
+    aside > * + * { margin-top:18px; }
+    .rankings { padding:2px 16px 8px; margin:0; list-style:none; counter-reset:ranking; }
+    .rankings li { counter-increment:ranking; position:relative; padding:12px 0 12px 30px; border-bottom:1px solid var(--line); font-size:13px; line-height:1.45; }
+    .rankings li:last-child { border:0; }.rankings li:before { content:counter(ranking); position:absolute; left:0; top:12px; width:21px; height:21px; color:#fff; background:#7b8b99; text-align:center; line-height:21px; font-size:12px; font-weight:800; }.rankings li:nth-child(1):before { background:#e94c3d; }.rankings li:nth-child(2):before { background:#ef9840; }.rankings li:nth-child(3):before { background:#4a91be; }
+    .chrome-error { height:100%; min-height:inherit; padding:19px 20px; color:#202124; background:#fff; font-family:Arial,sans-serif; }
+    .chrome-error .file { width:27px; height:34px; border:2px solid #5f6368; border-radius:2px; position:relative; margin-bottom:9px; }.chrome-error .file:after { content:"×"; position:absolute; left:7px; top:2px; font-size:23px; color:#5f6368; }.chrome-error h3 { margin:0 0 5px; font-size:16px; font-weight:500; }.chrome-error p { margin:3px 0; color:#5f6368; font-size:12px; }.chrome-error code { font-size:11px; color:#5f6368; }
+    footer { padding:24px 0 30px; color:#687785; font-size:12px; }
+    @media (max-width:800px) { .layout { grid-template-columns:1fr; }.rail-ad { display:none; }.mobile-ad { display:block; }.masthead { flex-wrap:wrap; gap:10px; padding:12px 0; }.tagline { display:none; }.search { margin-left:0; width:100%; order:3; }.lead { grid-template-columns:1fr; }.lead-image { min-height:170px; }.leaderboard .ad-frame { height:126px; } }
+    @media (max-width:480px) { .wrap { width:min(100% - 20px,1140px); }.brand { font-size:23px; }.lead { padding:11px; }h1 { font-size:19px; }.article { grid-template-columns:88px 1fr; padding:12px; gap:11px; }.thumb { min-height:67px; }.article p { display:none; }.article h3 { font-size:14px; } }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header>
+    <div class="wrap masthead">
+      <a class="brand" href="#top">ANUBIS <b>NEWS</b></a>
+      <span class="tagline">明日を読み解く、ローカルニュース</span>
+      <form class="search" id="searchForm"><input id="searchInput" aria-label="ニュースを検索" placeholder="キーワードを入力"><button>検索</button></form>
+    </div>
+    <nav aria-label="ニュースのカテゴリー"><div class="wrap"><ul class="navlist"><li><a href="#top">トップ</a></li><li><a href="#domestic">国内</a></li><li><a href="#world">国際</a></li><li><a href="#business">経済</a></li><li><a href="#tech">テクノロジー</a></li><li><a href="#life">暮らし</a></li><li><a href="#sports">スポーツ</a></li></ul></div></nav>
+  </header>
+  <div class="wrap notice" id="connectionNotice"><strong><span class="status-dot" id="statusDot"></span><span id="statusTitle">Anubis 接続を確認中</span></strong><span id="statusText">ラズベリーパイの状態を確認しています…</span></div>
+  <main class="wrap" id="top">
+    <div class="layout">
+      <div>
+        <section class="card" id="domestic"><div class="section-head"><h2>トップニュース</h2><a href="#articles">もっと見る ›</a></div><div class="lead"><div class="lead-image" aria-label="特集イメージ"></div><div><div class="eyebrow">LOCAL / きょう 08:30</div><h1>街の小さな発見を、次のアイデアへ。地域で始まる新しいつながり</h1><p>身近な課題に目を向ける人たちが、暮らしを少しずつ変えています。現場から見えた、続いていくための工夫を取材しました。</p><p class="meta">ANUBIS NEWS 編集部　·　4時間前　·　コメント 38件</p></div></div></section>
+        <section class="card ad-slot leaderboard" aria-label="広告枠"><div class="ad-label">ADVERTISEMENT</div><div class="ad-frame" data-ad-size="leaderboard"></div></section>
+        <section class="card feed" id="articles"><div class="section-head"><h2>新着ニュース</h2><a href="#top">トップへ ↑</a></div>
+          <article class="article" id="tech"><div class="thumb"></div><div><div class="eyebrow">テクノロジー　·　09:15</div><h3>身近なデータを「役に立つ情報」に変える、新しい地域プロジェクト</h3><p>専門家と住民が一緒に考える、わかりやすい仕組みづくりが始まっています。</p></div></article>
+          <article class="article" id="business"><div class="thumb t2"></div><div><div class="eyebrow">経済　·　08:42</div><h3>商店街の朝に新しい風。小さな店が選んだ、続けられるデジタル活用</h3><p>便利さと人らしさを両立させる、現場の試行錯誤を追いました。</p></div></article>
+          <article class="article" id="world"><div class="thumb t3"></div><div><div class="eyebrow">国際　·　07:58</div><h3>世界の都市で広がる「歩いて楽しめる街」への取り組み</h3><p>移動の選択肢を増やすことで、暮らしはどう変わるのでしょうか。</p></div></article>
+          <article class="article" id="life"><div class="thumb t4"></div><div><div class="eyebrow">暮らし　·　07:15</div><h3>忙しい毎日に余白をつくる。専門家に聞く、整える習慣</h3><p>今日から試せる、気持ちよく一日を始めるためのヒントです。</p></div></article>
+        </section>
+        <section class="card ad-slot mobile-ad" aria-label="広告枠"><div class="ad-label">ADVERTISEMENT</div><div class="ad-frame" data-ad-size="mobile"></div></section>
+      </div>
+      <aside>
+        <section class="card rail-ad" aria-label="広告枠"><div class="ad-label">ADVERTISEMENT</div><div class="ad-frame" data-ad-size="rail"></div></section>
+        <section class="card"><div class="section-head"><h2>アクセスランキング</h2><a href="#rank">一覧 ›</a></div><ol class="rankings" id="rank"><li>「いつもの景色」が変わる瞬間、写真家が見つめる街の表情</li><li>専門家が解説。今知っておきたい、暮らしの防災ポイント</li><li>週末の小旅行に。電車で行ける静かな場所、5つの選択肢</li><li>新しい学びの場がオープン、子どもたちの反応は</li><li>読者から届いた、忘れられない一冊の物語</li></ol></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="wrap">© ANUBIS NEWS　｜　本ページはデモ用のオリジナルニュースポータルです。</footer>
+  <script>
+    (() => {
+      const STATUS_URL = 'http://192.168.100.21:5000/status';
+      const AD_URL = 'http://ad.anubis.test:8081/ad.html';
+      const dot = document.getElementById('statusDot'), title = document.getElementById('statusTitle'), text = document.getElementById('statusText');
+      let knownMode = null;
+      function errorMarkup() { return '<div class="chrome-error"><div class="file"></div><h3>このサイトにアクセスできません</h3><p>ad.anubis.test の DNS アドレスが見つかりませんでした。</p><code>DNS_PROBE_FINISHED_NXDOMAIN</code></div>'; }
+      function demoMarkup() { return '<div style="height:100%;display:flex;align-items:center;padding:18px 20px;color:#fff;background:linear-gradient(125deg,#102e5c,#1d78b7 62%,#55c8cb);font-weight:800"><div><small style="letter-spacing:.12em;opacity:.8">ANUBIS PARTNER · DEMO PREVIEW</small><div style="font-size:clamp(16px,3vw,26px);margin-top:5px">発見は、すぐそばにある。</div><small style="font-weight:500;opacity:.9">ラズベリーパイ未接続時のローカル表示</small></div></div>'; }
+      function setAds(mode) {
+        if (knownMode === mode) return;
+        knownMode = mode;
+        document.querySelectorAll('.ad-frame').forEach((slot, index) => {
+          if (mode === 'on') { slot.innerHTML = errorMarkup(); return; }
+          if (mode === 'demo') { slot.innerHTML = demoMarkup(); return; }
+          const frame = document.createElement('iframe');
+          frame.title = 'ANUBIS 広告'; frame.loading = 'lazy';
+          frame.src = AD_URL + '?size=' + encodeURIComponent(slot.dataset.adSize || 'standard') + '&slot=' + index + '&cb=' + Date.now();
+          slot.replaceChildren(frame);
+        });
+      }
+      function readMode(data) {
+        const raw = data && (data.mode ?? data.status ?? data.anubis ?? data.enabled ?? data.on ?? data.active);
+        if (raw === true || raw === 1 || String(raw).toLowerCase() === 'on' || String(raw).toLowerCase() === 'enabled' || String(raw).toLowerCase() === 'blocking') return 'on';
+        if (raw === false || raw === 0 || String(raw).toLowerCase() === 'off' || String(raw).toLowerCase() === 'disabled') return 'off';
+        return null;
+      }
+      function display(mode, reason) {
+        dot.className = 'status-dot ' + (mode || '');
+        if (mode === 'on') { title.textContent = 'Anubis は ON'; text.textContent = '広告ブロック中：広告枠に接続エラーのデモを表示しています。'; }
+        else if (mode === 'off') { title.textContent = 'Anubis は OFF'; text.textContent = '広告を表示中：ad.anubis.test の広告ページを読み込んでいます。'; }
+        else { title.textContent = 'Anubis に接続できません'; text.textContent = reason || 'デモの広告プレビューを表示しています。ラズベリーパイと Flask を確認してください。'; }
+      }
+      async function poll() {
+        try {
+          const response = await fetch(STATUS_URL, { cache: 'no-store', signal: AbortSignal.timeout(2500) });
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          const data = await response.json(); const mode = readMode(data);
+          if (!mode) throw new Error('不明な status 応答');
+          display(mode); setAds(mode);
+        } catch (error) { display(null); setAds('demo'); }
+      }
+      document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); const q = document.getElementById('searchInput').value.trim(); if (q) alert('「' + q + '」の検索はデモ表示です。'); });
+      setAds('demo'); poll(); setInterval(poll, 1000);
+    })();
+  </script>
+</body>
+</html>
